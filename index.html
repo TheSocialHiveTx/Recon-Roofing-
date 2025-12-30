@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Roofing & Renovations | La Porte, TX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* Entrance Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal-on-scroll { opacity: 0; }
+        .reveal-on-scroll.active { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        /* Pulse Animation for CTAs */
+        @keyframes pulse-orange {
+            0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(234, 88, 12, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+        }
+        .btn-pulse { animation: pulse-orange 2s infinite; }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+        .nav-shrunk {
+            height: 4.5rem !important;
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        /* Wizard Logic */
+        .wizard-step { display: none; }
+        .wizard-step.active { display: block; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Accordion transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        .accordion-open .accordion-content {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+        
+        .nav-link-active {
+            color: #f97316 !important;
+            border-bottom: 2px solid #f97316;
+        }
+
+        /* Mobile menu transitions */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(-100%);
+        }
+        #mobile-menu.open {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 selection:bg-orange-200 selection:text-orange-900">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="glass-nav text-white fixed top-0 w-full z-50 shadow-xl border-b border-orange-500/30 h-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div class="flex items-center justify-between h-full">
+                <div class="flex-shrink-0 flex items-center space-x-3">
+                    <a href="#home" class="flex items-center space-x-2 transition-transform hover:scale-105 active:scale-95">
+                        <div class="bg-orange-500 p-2 rounded-lg shadow-lg shadow-orange-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-900"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span id="nav-title" class="font-bold tracking-tighter uppercase brand-font leading-none text-xl transition-all">Recon</span>
+                            <span id="nav-subtitle" class="text-xs text-cyan-400 tracking-widest uppercase font-semibold leading-none transition-all duration-300 mt-1">Roofing & Renovations</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 uppercase text-sm font-semibold tracking-wider">
+                        <a href="#home" class="nav-link text-slate-300 hover:text-white transition-all duration-300 px-1 py-2 hover:translate-y-[-2px]">Home</a>
+                        <a href="#roofing" class="nav-link text-slate-300 hover:text-white transition-all duration-300 px-1 py-2 hover:translate-y-[-2px]">Roofing</a>
+                        <a href="#construction" class="nav-link text-slate-300 hover:text-white transition-all duration-300 px-1 py-2 hover:translate-y-[-2px]">Construction</a>
+                        <a href="#financing" class="nav-link text-slate-300 hover:text-white transition-all duration-300 px-1 py-2 hover:translate-y-[-2px]">Financing</a>
+                        <a href="tel:713-903-9155" id="nav-cta" class="bg-orange-600 hover:bg-orange-700 text-white rounded-md transition-all flex items-center gap-2 transform hover:scale-105 btn-pulse px-5 py-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            713-903-9155
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-toggle" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+                        <svg id="menu-icon-open" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                        <svg id="menu-icon-close" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
+                <a href="#home" class="mobile-nav-link block px-3 py-4 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Home</a>
+                <a href="#roofing" class="mobile-nav-link block px-3 py-4 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Roofing</a>
+                <a href="#construction" class="mobile-nav-link block px-3 py-4 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Construction</a>
+                <a href="#financing" class="mobile-nav-link block px-3 py-4 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Financing</a>
+                <a href="tel:713-903-9155" class="block bg-orange-600 text-white px-3 py-4 rounded-md font-bold mx-2 mb-2">Call 713-903-9155</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="relative min-h-[90vh] flex items-center bg-slate-900 overflow-hidden pt-20">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&q=80&w=2000" alt="New Roof" class="w-full h-full object-cover opacity-50 grayscale-[0.3] scale-105">
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/60 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="reveal-on-scroll">
+                        <h1 class="text-5xl md:text-8xl font-bold uppercase brand-font mb-6 leading-[0.9] tracking-tight text-white">
+                            Building <br />
+                            <span class="text-orange-500 inline-block">Strength</span> <br />
+                            On Trust.
+                        </h1>
+                        <p class="text-xl md:text-2xl text-slate-200 mb-8 max-w-xl font-light leading-relaxed">
+                            A Christ-centered team serving La Porte, TX with durable roofing and full-scale renovations.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="tel:713-903-9155" class="bg-orange-600 hover:bg-orange-700 text-white text-center px-8 py-5 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2 group btn-pulse shadow-2xl shadow-orange-600/30">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                Direct: 713-903-9155
+                            </a>
+                        </div>
+                    </div>
+                    <div class="reveal-on-scroll" style="transition-delay: 0.2s">
+                        <div id="wizard-box" class="bg-white p-10 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 h-1.5 bg-slate-100 w-full">
+                                <div id="wizard-progress" class="h-full bg-orange-500 transition-all duration-500" style="width: 33%"></div>
+                            </div>
+                            
+                            <span id="wizard-step-text" class="text-xs font-bold text-orange-500 uppercase tracking-[0.2em] block mb-2">Step 1 of 3</span>
+                            
+                            <div id="wiz-step-1" class="wizard-step active">
+                                <h3 class="text-2xl font-bold brand-font uppercase mb-6 text-slate-900">What can we help you with?</h3>
+                                <div class="grid gap-3">
+                                    <button onclick="wizardNext(1)" class="wizard-option-btn flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">Roof Repair</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <button onclick="wizardNext(1)" class="wizard-option-btn flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">New Roof Install</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <button onclick="wizardNext(1)" class="wizard-option-btn flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">Renovations</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <button onclick="wizardNext(1)" class="wizard-option-btn flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-orange-500 hover:bg-orange-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">Financing Info</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-orange-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="wiz-step-2" class="wizard-step">
+                                <h3 class="text-2xl font-bold brand-font uppercase mb-6 text-slate-900">When is the best time?</h3>
+                                <div class="grid gap-3">
+                                    <button onclick="wizardNext(2)" class="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">As soon as possible</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-cyan-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <button onclick="wizardNext(2)" class="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">Within 2 weeks</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-cyan-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                    <button onclick="wizardNext(2)" class="flex items-center justify-between p-4 rounded-xl border border-slate-200 hover:border-cyan-500 hover:bg-cyan-50/30 transition-all group text-left">
+                                        <span class="font-semibold text-slate-800">Just planning ahead</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-300 group-hover:text-cyan-500 group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="wiz-step-3" class="wizard-step">
+                                <h3 class="text-2xl font-bold brand-font uppercase mb-6 text-slate-900">Where should we reach you?</h3>
+                                <div class="space-y-4">
+                                    <input type="text" placeholder="Your Name" class="w-full p-4 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-orange-500 outline-none transition-all shadow-sm">
+                                    <input type="tel" placeholder="Phone Number" class="w-full p-4 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-orange-500 outline-none transition-all shadow-sm">
+                                    <button onclick="wizardFinish()" class="w-full bg-slate-900 text-white p-5 rounded-xl font-bold uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+                                        Get My Estimate
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="wiz-success" class="wizard-step text-center py-10">
+                                <div class="w-20 h-20 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-600"><polyline points="20 6 9 17 4 12"/></svg>
+                                </div>
+                                <h3 class="text-2xl font-bold brand-font uppercase mb-4">You're on the list!</h3>
+                                <p class="text-slate-600 mb-6">Robb will contact you personally within 24 hours.</p>
+                                <button onclick="wizardReset()" class="text-orange-600 font-bold uppercase tracking-widest text-sm underline">Start Over</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-12 bg-white border-b border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <span class="block text-4xl font-bold brand-font text-slate-900">500+</span>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Homes Protected</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-4xl font-bold brand-font text-slate-900">15+</span>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Years Experience</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-4xl font-bold brand-font text-slate-900">100%</span>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Honesty Guarantee</span>
+                    </div>
+                    <div class="text-center">
+                        <span class="block text-4xl font-bold brand-font text-slate-900">4.9/5</span>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-widest">Customer Rating</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="py-24 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div class="space-y-8 reveal-on-scroll">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-sm font-bold uppercase tracking-wider">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                            Faith & Integrity
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-bold brand-font uppercase text-slate-900 leading-tight">
+                            Christ-Centered <br />
+                            <span class="text-cyan-600">Excellence</span>
+                        </h2>
+                        <p class="text-lg text-slate-600 leading-relaxed">
+                            We don't just fix roofs; we build relationships. Every home is handled with the care we'd give our own families. It's about honesty, craftsmanship, and community.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-slate-800 font-semibold uppercase tracking-tight">Locally Owned & Operated</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-slate-800 font-semibold uppercase tracking-tight">Full Insurance Claim Assistance</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                <span class="text-slate-800 font-semibold uppercase tracking-tight">10-Year Labor Warranties</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <a href="#construction" class="inline-flex items-center gap-2 text-orange-600 font-bold uppercase tracking-widest text-sm hover:gap-4 transition-all">
+                                See Our Work History 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative reveal-on-scroll" style="transition-delay: 0.2s">
+                        <div class="absolute -inset-4 bg-orange-500/10 rounded-[3rem] -rotate-3 -z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&fit=crop&q=80&w=1200" alt="Expert Roofing" class="rounded-[3rem] shadow-2xl w-full h-[600px] object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roofing Services Section -->
+        <section id="roofing" class="py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal-on-scroll">
+                    <span class="text-orange-600 font-bold uppercase tracking-[0.4em] text-xs">Expert Solutions</span>
+                    <h2 class="text-4xl md:text-6xl font-bold brand-font uppercase text-slate-900 mt-4 leading-none tracking-tight">Roofing <span class="text-cyan-600">Excellence</span></h2>
+                    <div class="w-24 h-2 bg-orange-600 mx-auto mt-6 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Repair -->
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[2.5rem] shadow-xl hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 border border-slate-100 flex flex-col h-full hover:-translate-y-3 group">
+                        <div class="bg-slate-50 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-cyan-600 font-bold uppercase tracking-widest text-xs">Immediate Action</span>
+                        </div>
+                        <h3 class="text-3xl font-bold brand-font uppercase text-slate-900 mb-6">Roof Repair</h3>
+                        <p class="text-slate-600 mb-8 leading-relaxed">Leaky ridges or storm-damaged shingles? We offer fast response times and durable patches that last.</p>
+                        <ul class="mt-auto space-y-4">
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-slate-700 font-medium">Leak Detection & Repair</span></li>
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-slate-700 font-medium">Shingle Replacement</span></li>
+                        </ul>
+                    </div>
+                    <!-- Installation -->
+                    <div class="reveal-on-scroll bg-slate-900 p-10 rounded-[2.5rem] text-white hover:shadow-2xl transition-all duration-500 group relative overflow-hidden h-full flex flex-col">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 blur-3xl rounded-full"></div>
+                        <div class="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mb-8 text-orange-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 13 1.5 1.5L15 12"/><path d="M22.5 15.5a2.5 2.5 0 0 1-5 0v-5a2.5 2.5 0 0 1 5 0Z"/><path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-cyan-400 font-bold uppercase tracking-widest text-xs">Fresh Starts</span>
+                        </div>
+                        <h3 class="text-3xl font-bold brand-font uppercase mb-6">Installation</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">Premium materials and master craftsmanship for a roof that protects your family for decades.</p>
+                        <ul class="mt-auto space-y-4">
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="font-medium">Lifetime Shingles</span></li>
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="font-medium">10-Year Labor Warranty</span></li>
+                        </ul>
+                    </div>
+                    <!-- Protection -->
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[2.5rem] shadow-xl hover:shadow-2xl border border-slate-100 flex flex-col h-full hover:-translate-y-3 group">
+                        <div class="bg-slate-50 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 text-cyan-600 group-hover:bg-cyan-600 group-hover:text-white transition-colors duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="mb-2">
+                            <span class="text-cyan-600 font-bold uppercase tracking-widest text-xs">Longevity First</span>
+                        </div>
+                        <h3 class="text-3xl font-bold brand-font uppercase text-slate-900 mb-6">Protection</h3>
+                        <p class="text-slate-600 mb-8 leading-relaxed">Preventive maintenance is the key to avoiding costly floods. We offer full inspections and expert cleanings.</p>
+                        <ul class="mt-auto space-y-4">
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-slate-700 font-medium">Gutter Systems</span></li>
+                            <li class="flex items-start gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span class="text-slate-700 font-medium">Annual Inspections</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Construction Section -->
+        <section id="construction" class="py-24 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div class="relative order-2 lg:order-1 reveal-on-scroll">
+                        <div class="absolute -inset-4 bg-cyan-500/10 rounded-[3rem] -rotate-3 -z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=1200" alt="Construction Site" class="rounded-[3rem] shadow-2xl h-[600px] w-full object-cover grayscale">
+                        <div class="absolute bottom-10 right-10 bg-white p-8 rounded-3xl shadow-2xl max-w-xs hidden md:block">
+                            <h4 class="text-2xl font-bold brand-font uppercase text-slate-900 mb-2">Renovations</h4>
+                            <p class="text-sm text-slate-500 font-light">Complete exterior and structural home upgrades with 15+ years experience.</p>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2 space-y-8 reveal-on-scroll" style="transition-delay: 0.2s">
+                        <span class="inline-block bg-cyan-100 text-cyan-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">More Than Roofing</span>
+                        <h2 class="text-5xl md:text-7xl font-bold brand-font uppercase text-slate-900 leading-[0.9]">Complete <br /><span class="text-orange-600">Construction</span></h2>
+                        <p class="text-lg text-slate-600 leading-relaxed font-light">
+                            Building a stronger community means maintaining every part of the home. We apply our Christ-centered values to structural repairs and high-end renovations.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-orange-500/10 p-2 rounded-lg text-orange-600"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+                                <div>
+                                    <h5 class="font-bold uppercase brand-font tracking-tight">Siding & Trim</h5>
+                                    <p class="text-xs text-slate-500">Durable exterior finishes.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="bg-cyan-500/10 p-2 rounded-lg text-cyan-600"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+                                <div>
+                                    <h5 class="font-bold uppercase brand-font tracking-tight">Decks & Fences</h5>
+                                    <p class="text-xs text-slate-500">Premium outdoor living.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financing Section -->
+        <section id="financing" class="py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="bg-cyan-100 text-cyan-800 px-6 py-2 rounded-full inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest mb-10 shadow-sm shadow-cyan-500/10 reveal-on-scroll">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    Smart Funding
+                </div>
+                <h2 class="text-6xl md:text-9xl font-bold brand-font uppercase text-slate-900 mb-8 tracking-tighter leading-none reveal-on-scroll">
+                    Financing <br /><span class="text-orange-600">Made Easy</span>
+                </h2>
+                <p class="text-2xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-light mb-16 reveal-on-scroll">
+                    Don't let budget hold back your safety. We offer monthly payment plans through Hearth that fit your lifestyle.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-left mb-20">
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[3rem] shadow-lg border border-slate-100">
+                        <h4 class="font-bold text-2xl uppercase brand-font mb-4">Flexible Terms</h4>
+                        <p class="text-slate-500">Repayment from 2 to 20 years.</p>
+                    </div>
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[3rem] shadow-lg border border-slate-100" style="transition-delay: 0.1s">
+                        <h4 class="font-bold text-2xl uppercase brand-font mb-4">Soft Pull</h4>
+                        <p class="text-slate-500">Zero impact on your credit score.</p>
+                    </div>
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[3rem] shadow-lg border border-slate-100" style="transition-delay: 0.2s">
+                        <h4 class="font-bold text-2xl uppercase brand-font mb-4">0% Options</h4>
+                        <p class="text-slate-500">Available for smaller projects.</p>
+                    </div>
+                    <div class="reveal-on-scroll bg-white p-10 rounded-[3rem] shadow-lg border border-slate-100" style="transition-delay: 0.3s">
+                        <h4 class="font-bold text-2xl uppercase brand-font mb-4">Quick Match</h4>
+                        <p class="text-slate-500">Rates in under 2 minutes.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 max-w-3xl mx-auto reveal-on-scroll">
+                    <h3 class="text-3xl font-bold brand-font uppercase mb-10">Common Questions</h3>
+                    <div class="accordion-item bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-4">
+                        <button onclick="toggleAccordion(this)" class="w-full p-8 text-left flex items-center justify-between group">
+                            <h4 class="font-bold text-xl flex items-center gap-3 text-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-600"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                Will this affect my credit score?
+                            </h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 transition-transform duration-300"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-8 text-slate-600 leading-relaxed font-light">
+                                No. Pre-qualifying through Hearth uses a 'soft credit pull' which has zero impact on your credit score.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-4">
+                        <button onclick="toggleAccordion(this)" class="w-full p-8 text-left flex items-center justify-between group">
+                            <h4 class="font-bold text-xl flex items-center gap-3 text-slate-900">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-600"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                Can I finance just my deductible?
+                            </h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 transition-transform duration-300"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-8 text-slate-600 leading-relaxed font-light">
+                                Yes. Many homeowners use our financing to cover their insurance deductible to keep cash in their pockets.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 border-t-4 border-orange-600">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-white text-2xl font-bold uppercase brand-font mb-4">Recon Roofing & Renovations</h3>
+                    <p class="max-w-md mb-6 leading-relaxed">
+                        A Christ-centered company built on trust, respect, and honesty. We treat every home we work on as if it were our own. Serving La Porte, TX and surrounding cities.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-slate-400 hover:text-orange-500 transition-all hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-orange-500 transition-all hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest text-sm mb-4">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>713-903-9155</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            <span class="break-all">reconrooftx@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>La Porte, TX, USA</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest text-sm mb-4">Navigation</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="hover:text-orange-500 transition-colors">Home</a></li>
+                        <li><a href="#roofing" class="hover:text-orange-500 transition-colors">Roofing Services</a></li>
+                        <li><a href="#construction" class="hover:text-orange-500 transition-colors">Construction</a></li>
+                        <li><a href="#financing" class="hover:text-orange-500 transition-colors">Financing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-slate-800 text-sm text-center">
+                <p>&copy; <span id="year"></span> Recon Roofing. Built on Faith, Honesty, and Hard Work.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Mobile Button -->
+    <div class="fixed bottom-6 right-6 z-40 md:hidden flex flex-col gap-3">
+        <a href="tel:713-903-9155" class="bg-orange-600 text-white p-4 rounded-full shadow-2xl shadow-orange-600/40 flex items-center justify-center btn-pulse active:scale-90 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+    </div>
+
+    <!-- Logic Scripts -->
+    <script>
+        // Update year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Navbar Scroll Logic
+        const navbar = document.getElementById('navbar');
+        const subtitle = document.getElementById('nav-subtitle');
+        const navTitle = document.getElementById('nav-title');
+        const navCta = document.getElementById('nav-cta');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-shrunk');
+                // Removed opacity-0 to keep subtitle visible as requested
+                navTitle.classList.remove('text-xl');
+                navTitle.classList.add('text-lg');
+                navCta.classList.remove('px-5', 'py-2');
+                navCta.classList.add('px-4', 'py-1.5', 'text-xs');
+            } else {
+                navbar.classList.remove('nav-shrunk');
+                navTitle.classList.add('text-xl');
+                navTitle.classList.remove('text-lg');
+                navCta.classList.add('px-5', 'py-2');
+                navCta.classList.remove('px-4', 'py-1.5', 'text-xs');
+            }
+
+            // Scroll Spying
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = "";
+
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("nav-link-active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("nav-link-active");
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        menuToggle.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuIconOpen.classList.toggle('hidden', !isHidden);
+            menuIconClose.classList.toggle('hidden', isHidden);
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+
+        // Wizard Logic
+        let currentWizStep = 1;
+        function wizardNext(step) {
+            document.getElementById(`wiz-step-${step}`).classList.remove('active');
+            currentWizStep = step + 1;
+            
+            if (currentWizStep <= 3) {
+                document.getElementById(`wiz-step-${currentWizStep}`).classList.add('active');
+                document.getElementById('wizard-progress').style.width = `${(currentWizStep / 3) * 100}%`;
+                document.getElementById('wizard-step-text').textContent = `Step ${currentWizStep} of 3`;
+            }
+        }
+
+        function wizardFinish() {
+            document.getElementById('wiz-step-3').classList.remove('active');
+            document.getElementById('wiz-success').classList.add('active');
+            document.getElementById('wizard-progress').style.width = '100%';
+            document.getElementById('wizard-step-text').style.display = 'none';
+        }
+
+        function wizardReset() {
+            document.getElementById('wiz-success').classList.remove('active');
+            document.getElementById('wiz-step-1').classList.add('active');
+            currentWizStep = 1;
+            document.getElementById('wizard-progress').style.width = '33%';
+            document.getElementById('wizard-step-text').style.display = 'block';
+            document.getElementById('wizard-step-text').textContent = 'Step 1 of 3';
+        }
+
+        // Accordion Logic
+        function toggleAccordion(btn) {
+            const item = btn.parentElement;
+            const isOpen = item.classList.toggle('accordion-open');
+            const icon = btn.querySelector('svg:last-child');
+            icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Intersection Observer for Reveal Animations
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
